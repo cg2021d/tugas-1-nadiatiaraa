@@ -1,9 +1,9 @@
 # Tugas-1-Nadiatiaraa
 
 
-**Nama : Nadia Tiara Febriana**#
-**NRP : 05111940000217**
-**Benda : Indomie**
+**Nama : Nadia Tiara Febriana** \
+**NRP : 05111940000217** \
+**Benda : Indomie** \ 
 
 Tampak atas:
 ![tampak atas](https://user-images.githubusercontent.com/72669398/134188845-27d7ea09-9958-48e7-aaa7-16b92f5d91e0.jpg)
