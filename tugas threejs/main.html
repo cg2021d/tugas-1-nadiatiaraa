@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Three.js</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body 
+        {
+            background-color: rgb(27, 12, 29);
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="color: rgb(247, 233, 233);">Tugas GrafKom-D (Nadia Tiara Febriana - 05111940000217)</h1>
+    <select name="light" id="light" style="margin: 1%;">
+        <optgroup label="Pilihan">
+            <option value="0">Directional Light</option>
+            <option value="1">Ambient Light</option>
+            <option value="2">Point Light</option>
+            <option value="3">Hemisphere Light</option>
+            <option value="4">Spotlight</option>
+        </optgroup>
+    </select>
+</body>
+
+</html>
+
+<script>
+    let scene, camera, renderer, cube, octahedron, cylinder, torus, box, sphere, cone; // bentuk
+    
+    // inisialisasi scene, camera, objects dan renderer
+    let createCube = function() 
+    {
+        let geometry = new THREE.BoxGeometry(3, 3, 3, 3, 3, 3), material = new THREE.MeshBasicMaterial
+        ({
+            wireframe: true,
+            color: 0x660000
+        })
+        cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+        cube.position.set(-15, 11, -4);
+    }
+
+    let createOctahedron = function() 
+    {
+        let geometry = new THREE.OctahedronGeometry(3), material = new THREE.MeshPhongMaterial
+        ({
+            color: 0xFC8307,
+            shininess: 100
+        })
+        octahedron = new THREE.Mesh(geometry, material);
+        scene.add(octahedron);
+        octahedron.position.set(0, 1.2, 0);
+    }
+
+    let createCylinder = function() 
+    {
+        let geometry = new THREE.CylinderGeometry(2, 2, 1, 20), material = new THREE.MeshLambertMaterial
+        ({
+            color: 0x0BEF8C,
+            emissive: 0x0
+        })
+        cylinder = new THREE.Mesh(geometry, material);
+        scene.add(cylinder);
+        cylinder.position.set(-10, 1, 0);
+    }
+
+    let createSphere = function() 
+    {
+        let geometry = new THREE.SphereGeometry(2, 10, 5), material = new THREE.MeshPhongMaterial
+        ({
+            color: 0xCAA27B, wireframe: true, shininess: 100
+        })
+        sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+        sphere.position.set(0, 8.5, -1);
+    }
+
+    let createCone = function() 
+    {
+        let geometry = new THREE.ConeGeometry(2.5, 5, 25), material = new THREE.MeshPhysicalMaterial
+        ({
+            color: 0xFCE985,flatShading: false,
+            metalness: 0.5,reflectivity: 2, shininess: 10,
+            clearcoat: 0.3, clearcoatRoughness: 0.25, tranmission: 2
+        });
+        cone = new THREE.Mesh(geometry, material);
+        scene.add(cone);
+        cone.position.set(15, 11, -4)
+
+    }
+
+    let createTorus = function() 
+    {
+        let geometry = new THREE.TorusGeometry(2, 1, 20, 35), material = new THREE.MeshPhongMaterial
+        ({
+            color: 0x05608A, flatShading: false, shininess: 100,
+            clearcoat: 0.3, clearcoatRoughness: 0.25
+        });
+        torus = new THREE.Mesh(geometry, material);
+        scene.add(torus);
+        torus.position.set(10, 1.2, Math.PI / 4)
+
+    }
+
+    function LightFunc(Light) 
+    {
+        plight.visible = true;
+        dlight.visible = false;
+        if(document.getElementById('Change_Light').checked) 
+        {
+            plight.visible = false;
+            dlight.visible = true;
+        }
+        renderer.render(scene, camera);
+    }
+
+    // 1. buat scene
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color('rgb(250, 210, 255)');            
+
+    // 2. buat dan temukan camera         
+    camera = new THREE.PerspectiveCamera(110, window.innerWidth / window.innerHeight, 1, 1000);
+
+    camera.position.z = 10;
+
+    const directLight = new THREE.DirectionalLight(0xffffff, 1);
+            directLight.position.set(2, 1, 2).normalize(), 
+            ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            ambientLight.position.set(3, 0, 3), 
+            pointLight = new THREE.PointLight(0xffffff, 1, 100);
+            pointLight.position.set(0, 0, 0),
+            hemiLight = new THREE.HemisphereLight(0xffffff, '#FF0000', 1);
+            hemiLight.position.set(5, 10, 12),
+            spotLight = new THREE.SpotLight(0xffffff, 1, 75);
+            spotLight.position.set(105, 10, 10);
+
+    const lights = [directLight, ambientLight, pointLight, hemiLight, spotLight];
+
+    lights.forEach((obj) => scene.add(obj));
+
+    lights.forEach((light) => 
+    {
+        light.visible = false;
+    });
+    lights[0].visible = true;
+
+    const selectedLight = document.getElementById('light');
+    selectedLight.addEventListener('change', (e) => 
+    {
+        const selected = e.target.value;
+        lights.forEach((light) => 
+        {
+            light.visible = false;
+        });
+        lights[selected].visible = true;
+    });        
+
+    // 3. buat dan temukan object di scene          
+    createCube(),createCylinder(), createTorus(),createSphere(),createOctahedron(),createCone();
+      
+    // 4. buat render     
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    document.body.appendChild(renderer.domElement);      
+
+    // main animation loop - calls 50-60 in a second.
+    let mainLoop = function()  
+    {
+        console.log("Hello");
+        renderer.render(scene, camera);
+        cube.rotation.x += 0.03;
+        cube.rotation.y += 0.03;
+
+        cylinder.rotation.x += 0.03;
+        cylinder.rotation.y += 0.03;
+
+        torus.rotation.x += 0.03;
+        torus.rotation.y += 0.03;
+
+        cone.rotation.x += -0.03;
+        cone.rotation.z += -0.03;
+        cone.rotation.y += -0.03;
+
+        sphere.rotation.x += 0.03;
+        sphere.rotation.y += 0.03;
+
+        octahedron.rotation.x += 0.03;
+        octahedron.rotation.y += 0.03;   
+    
+        requestAnimationFrame(mainLoop);    
+    };
+    mainLoop();
+</script>
