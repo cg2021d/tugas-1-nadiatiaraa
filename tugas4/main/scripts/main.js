@@ -5,7 +5,7 @@ import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threej
 import { getRandomInt } from "./utils.js";
 
 let scene, camera, renderer;
-let controls, sphereCamera;
+let controls;
 let canvasDOM;
 let geometries = [];
 
@@ -38,7 +38,7 @@ const main = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
   };
 
-  // 1. Create the scene
+  // 1. Create the scene
   scene = new THREE.Scene();
   const loader = new THREE.TextureLoader();
   const texture = loader.load(
@@ -50,7 +50,7 @@ const main = () => {
     }
   );
 
-  // 2. Create an locate the camera
+  // 2. Create an locate the camera
   camera = new THREE.PerspectiveCamera(
     80,window.innerWidth / window.innerHeight,0.1,1000
   );
@@ -94,14 +94,7 @@ const main = () => {
     minFilter: THREE.LinearMipmapLinearFilter,
   });
 
-  sphereCamera = new THREE.CubeCamera(1, 1000, cubeRenderTarget);
-  sphereCamera.position.set(0, 0, -1);
-  scene.add(sphereCamera);
-  let sphereMaterial = new THREE.MeshBasicMaterial({
-    envMap: sphereCamera.renderTarget,
-  });
-
-  // 4. Create the renderer
+  // 4. Create the renderer
   renderer = new THREE.WebGLRenderer({ canvas: canvasDOM, antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -155,7 +148,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const mainLoop = () => {
   renderer.render(scene, camera);
-  sphereCamera.update(renderer, scene);
   controls.update();
   requestAnimationFrame(mainLoop);
 };
