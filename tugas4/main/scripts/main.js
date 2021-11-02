@@ -5,9 +5,7 @@ import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threej
 import { getRandomInt } from "./utils.js";
 
 let scene, camera, renderer;
-let controls;
-let canvasDOM;
-let geometries = [];
+let controls, canvasDOM;
 
 const LIGHT_COLOR = 'white';
 
