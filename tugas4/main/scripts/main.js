@@ -9,24 +9,7 @@ let controls;
 let canvasDOM;
 let geometries = [];
 
-const LIGHT_COLOR = 'pink';
-
-// Create Geometry Function
-const createCube = (side, x, y, z) => {
-  const loader = new THREE.TextureLoader();
-  const geometry = new THREE.BoxGeometry(side, side, side);
-  const texture = loader.load(
-    "https://threejsfundamentals.org/threejs/resources/images/flower-1.jpg"
-  );
-
-  const material = new THREE.MeshBasicMaterial({
-    map: texture,
-  });
-  
-  const cube = new THREE.Mesh(geometry, material);
-  cube.position.set(x, y, z);
-  return cube;
-};
+const LIGHT_COLOR = 'white';
 
 const main = () => {
   canvasDOM = document.getElementById("myCanvas");
@@ -41,8 +24,7 @@ const main = () => {
   // 1. Create the scene
   scene = new THREE.Scene();
   const loader = new THREE.TextureLoader();
-  const texture = loader.load(
-    "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg",
+  const texture = loader.load( "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/2294472375_24a3b8ef46_o.jpg", 
     () => {
       const rt = new THREE.WebGLCubeRenderTarget(texture.image.height);
       rt.fromEquirectangularTexture(renderer, texture);
@@ -86,13 +68,6 @@ const main = () => {
   plane.position.y = -8.5;
   plane.receiveShadow = true;
   scene.add(plane);
-
-  // Realistic Reflective
-  const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256, {
-    format: THREE.RGBFormat,
-    generateMipmaps: true,
-    minFilter: THREE.LinearMipmapLinearFilter,
-  });
 
   // 4. Create the renderer
   renderer = new THREE.WebGLRenderer({ canvas: canvasDOM, antialias: true });
