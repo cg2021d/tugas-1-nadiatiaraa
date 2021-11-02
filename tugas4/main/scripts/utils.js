@@ -10,10 +10,11 @@ const rgbToHex = (r, g, b) => {
 
 const getRandomRGB = () => {
   return rgbToHex(
-    getRandomInt(0, 255),
-    getRandomInt(0, 255),
-    getRandomInt(0, 255)
+    getRandomInt(0, 256), getRandomInt(0, 256), getRandomInt(0, 256)
   );
 };
 
-export { getRandomInt, getRandomRGB };
+export { 
+  getRandomInt, 
+  getRandomRGB 
+};
