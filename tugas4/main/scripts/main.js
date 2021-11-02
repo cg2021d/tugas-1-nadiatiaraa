@@ -2,7 +2,6 @@ import "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
 import { OrbitControls } from "https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js";
 import { GUI } from "https://threejsfundamentals.org/threejs/../3rdparty/dat.gui.module.js";
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js';
-import { getRandomInt } from "./utils.js";
 
 let scene, camera, renderer;
 let controls, canvasDOM;
@@ -15,7 +14,6 @@ const main = () => {
   const onWindowResize = () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-
     renderer.setSize(window.innerWidth, window.innerHeight);
   };
 
